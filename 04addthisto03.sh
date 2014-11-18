@@ -85,7 +85,7 @@ Testend=".mp4"
 ffmpeg \
 -re \
 -i ${Input} \
--f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/yoyo/test.jpg \
+-f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/test.jpg \
 ${testingDefprocess} -s 160x90 -b:v $((8))k ${Middle} -b:a 8k ${Output}1${Testend} \
 ${testingDefprocess} -s 160x90 -b:v $((13-10))k ${Middle} -b:a 10k ${Output}2${Testend} \
 ${testingDefprocess} -s 160x90 -b:v $((21-15))k ${Middle} -b:a 15k ${Output}3${Testend} \
