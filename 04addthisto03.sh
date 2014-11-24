@@ -4,19 +4,6 @@
 # or it will play a video when no stream is detected, but in this example
 #  it will be breaking the stream.....and a viewer will have to refresh and re-play.
 
-#this piece repeats the processes over and over every second-perhaps use to immediately restart stream
-#while :
-#do
-#pgrep init
-#pgrep hello
-#pgrep yoyo
-#pgrep khelper
-#pgrep 000022
-#pgrep asdasdjkl
-#date >> dddumpdelete
-#sleep 1
-#done
-
 # Stream commands here
 # sbc.smil contains following total bitrates kbps: 8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181
 
@@ -24,29 +11,25 @@
 #Input="rtmp://10.0.0.10/live/hd"
 #Input="rtmp://23.21.227.80/live/hd"
 #Input="rtmp://23.21.227.80/live/myStream3"
-#Input="/www/bjput-delete.mp4"
+Input="/www/bjput-delete.mp4"
 ###################
 #Input="/www/bjput-song.mp4"
-Input="/www/bjput-clip.mp4"
+#Input="/www/bjput-clip.mp4"
 #Input="/www/sbc-60fps.mp4"
 #Input="/www/new/output3.mp4"
 #################
-
-# build out -s option, specifies resolution
-# and build out audio options as well (i.e. libfdk_aac = small NOTE: change frequency limit and test if better)
 
 # CONFIGS
 # Currently, libx264 is best x.264 encoder
 #	(I suggest converting to x.265 when more popular)
 # Currently, libfdk_aac is best AAC encoder
 #	(there is some higher frequency limit which can be removed via a command option)
-# -r 29.97 = for fps
 #testingDefprocess="-c:v libx264 -c:a libfdk_aac"
 #testingDefprocess="-vcodec copy -acodec copy"
 #################
 #### TODO #######
 #testingDefprocess="-vcodec copy"
-testingDefprocess="-t 0:10 -vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97"
+testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97"
 ########### try without first and see how it multi-encodes ###############
 # this will set h.264 profile and levels
 # -profile:v baseline -level 3.0
@@ -61,27 +44,30 @@ testingDefprocess="-t 0:10 -vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -
 ###################
 #### TODO #######
 #  frequency limits from libfdk?, bits?(24bits/10bits?), 
+# Build out audio options as well (i.e. libfdk_aac = small NOTE: change frequency limit and test if better)
 #Middle="-acodec copy"
 Middle="-acodec libfdk_aac -ar 44.1k"
 ###################
 
 # OUTPUT
 ###########################################  change all CFC to SBC in smil files   ###############
-#Output="-f flv rtmp://23.21.227.80/live/sbc"
+# I wonder if we will need " live=1" ?
+Output="-f flv rtmp://23.21.227.80/live/sbc"
 #Output="-f flv rtmp://10.0.0.10/live/sbc"
 #Output="outputtest"
 #################
-Output="-y /www/realtime"
+#Output="-y /www/realtime"
 #################
 
 # ENDING (remove this when testing to a rtmp server)
-Testend=".mp4"
+#Testend=".mp4"
 
 # COMMAND
 # add -re for realtime input of a file (only for testing), but also for running a temporary video during downtime!!!
 #####  First number is video, 2nd is audio
 
 #sudo docker run -v /home/ripena/projects/sbc/20141101-CFC-ec2-files/www:/www nachochip/ffmpeg:2.4.2 \
+# for testing with a file, include a -re tag before input, to feed it in realtime
 ffmpeg \
 -re \
 -i ${Input} \
@@ -109,3 +95,6 @@ ${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Outp
 # Nginx commands here, remember to open/close public port later, but do we really need this?
 # I could just rely on S3/Cloudfront, to make sure no additional load occurs on this encoding server
 # simply add a role to this server to allow writing to S3
+
+# since I cannot directly write to s3, and rsyncing would be rather crood, I will choose to deliver
+# via nginx proxy over to the wowza, and from wowza to cloudfront. need to setup this process - no cache
