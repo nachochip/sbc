@@ -10,8 +10,8 @@
 # INPUT
 #Input="rtmp://10.0.0.10/live/hd"
 #Input="rtmp://23.21.227.80/live/hd"
-#Input="rtmp://23.21.227.80/live/myStream3"
-Input="/www/bjput-delete.mp4"
+Input="rtmp://23.21.227.80/live/myStream3"
+#Input="/www/bjput-delete.mp4"
 ###################
 #Input="/www/bjput-song.mp4"
 #Input="/www/bjput-clip.mp4"
@@ -51,7 +51,7 @@ Middle="-acodec libfdk_aac -ar 44.1k"
 
 # OUTPUT
 ###########################################  change all CFC to SBC in smil files   ###############
-# I wonder if we will need " live=1" ?
+# I wonder if we will need " live=1" ?  I think only for FMS servers
 Output="-f flv rtmp://23.21.227.80/live/sbc"
 #Output="-f flv rtmp://10.0.0.10/live/sbc"
 #Output="outputtest"
@@ -69,7 +69,6 @@ Output="-f flv rtmp://23.21.227.80/live/sbc"
 #sudo docker run -v /home/ripena/projects/sbc/20141101-CFC-ec2-files/www:/www nachochip/ffmpeg:2.4.2 \
 # for testing with a file, include a -re tag before input, to feed it in realtime
 ffmpeg \
--re \
 -i ${Input} \
 ${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Output}14${Testend} \
 ${testingDefprocess} -s 1280x720 -b:v $((2584-160))k ${Middle} -b:a 160k ${Output}13${Testend} \
