@@ -71,26 +71,27 @@ Output="-f flv rtmp://23.21.227.80/live/sbc"
 ffmpeg \
 -re \
 -i ${Input} \
--f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/test.jpg \
-${testingDefprocess} -s 160x90 -b:v $((8))k ${Middle} -b:a 8k ${Output}1${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((13-10))k ${Middle} -b:a 10k ${Output}2${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((21-15))k ${Middle} -b:a 15k ${Output}3${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((34-21))k ${Middle} -b:a 21k ${Output}4${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((55-34))k ${Middle} -b:a 34k ${Output}5${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((89-40))k ${Middle} -b:a 40k ${Output}6${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((144-80))k ${Middle} -b:a 80k ${Output}7${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((233-80))k ${Middle} -b:a 80k ${Output}8${Testend} \
-${testingDefprocess} -s 640x360 -b:v $((377-160))k ${Middle} -b:a 160k ${Output}9${Testend} \
-${testingDefprocess} -s 640x360 -b:v $((610-160))k ${Middle} -b:a 160k ${Output}10${Testend} \
-${testingDefprocess} -s 640x360 -b:v $((987-160))k ${Middle} -b:a 160k ${Output}11${Testend} \
-${testingDefprocess} -s 1280x720 -b:v $((1597-160))k ${Middle} -b:a 160k ${Output}12${Testend} \
-${testingDefprocess} -s 1280x720 -b:v $((2584-160))k ${Middle} -b:a 160k ${Output}13${Testend} \
 ${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Output}14${Testend} \
+${testingDefprocess} -s 1280x720 -b:v $((2584-160))k ${Middle} -b:a 160k ${Output}13${Testend} \
+${testingDefprocess} -s 1280x720 -b:v $((1597-160))k ${Middle} -b:a 160k ${Output}12${Testend} \
+${testingDefprocess} -s 640x360 -b:v $((987-160))k ${Middle} -b:a 160k ${Output}11${Testend} \
+${testingDefprocess} -s 640x360 -b:v $((610-160))k ${Middle} -b:a 160k ${Output}10${Testend} \
+${testingDefprocess} -s 640x360 -b:v $((377-160))k ${Middle} -b:a 160k ${Output}9${Testend} \
+${testingDefprocess} -s 320x180 -b:v $((233-80))k ${Middle} -b:a 80k ${Output}8${Testend} \
+${testingDefprocess} -s 320x180 -b:v $((144-80))k ${Middle} -b:a 80k ${Output}7${Testend} \
+${testingDefprocess} -s 320x180 -b:v $((89-40))k ${Middle} -b:a 40k ${Output}6${Testend} \
+${testingDefprocess} -s 320x180 -b:v $((55-34))k ${Middle} -b:a 34k ${Output}5${Testend} \
+${testingDefprocess} -s 160x90 -b:v $((34-21))k ${Middle} -b:a 21k ${Output}4${Testend} \
+${testingDefprocess} -s 160x90 -b:v $((21-15))k ${Middle} -b:a 15k ${Output}3${Testend} \
+${testingDefprocess} -s 160x90 -b:v $((13-10))k ${Middle} -b:a 10k ${Output}2${Testend} \
+${testingDefprocess} -s 160x90 -b:v $((8))k ${Middle} -b:a 8k ${Output}1${Testend} \
+
+# for some reason this is putting more load on server than I want, will investigate later
+#-f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/test.jpg
 
 
 #  code for creating an image every 2 seconds
 # try to write this to S3
-#  -f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/yoyo/test.jpg
 
 # Nginx commands here, remember to open/close public port later, but do we really need this?
 # I could just rely on S3/Cloudfront, to make sure no additional load occurs on this encoding server
