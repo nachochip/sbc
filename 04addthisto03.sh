@@ -9,8 +9,8 @@
 
 # INPUT
 #Input="rtmp://10.0.0.10/live/hd"
-#Input="rtmp://23.21.227.80/live/hd"
-Input="rtmp://23.21.227.80/live/myStream3"
+Input="rtmp://23.21.227.80/live/hd"
+#Input="rtmp://23.21.227.80/live/myStream3"
 #Input="/www/bjput-delete.mp4"
 ###################
 #Input="/www/bjput-song.mp4"
