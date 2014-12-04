@@ -1,6 +1,6 @@
 # Building LOCAL Docker Image and integrating SBC scripts
 
-FROM nachochip/ffmpeg:stable
+FROM 		nachochip/ffmpeg:stable
 
 MAINTAINER 	Nachochip 	<blockchaincolony@gmail.com>
 

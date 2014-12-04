@@ -1,6 +1,6 @@
 #!/bin/bash
-# This script will run the encoding command
-# Future version will either insert a video when no stream is detected
+# This script will run the encoding command inside the FFMPEG container.
+# Future versions will either insert a video when no stream is detected
 # or it will play a video when no stream is detected, but in this example
 #  it will be breaking the stream.....and a viewer will have to refresh and re-play.
 
@@ -12,12 +12,6 @@
 Input="rtmp://23.21.227.80/live/hd"
 #Input="rtmp://23.21.227.80/live/myStream3"
 #Input="/www/bjput-delete.mp4"
-###################
-#Input="/www/bjput-song.mp4"
-#Input="/www/bjput-clip.mp4"
-#Input="/www/sbc-60fps.mp4"
-#Input="/www/new/output3.mp4"
-#################
 
 # CONFIGS
 # Currently, libx264 is best x.264 encoder
@@ -50,24 +44,19 @@ Middle="-acodec libfdk_aac -ar 44.1k"
 ###################
 
 # OUTPUT
-###########################################  change all CFC to SBC in smil files   ###############
 # I wonder if we will need " live=1" ?  I think only for FMS servers
-Output="-f flv rtmp://23.21.227.80/live/sbc"
 #Output="-f flv rtmp://10.0.0.10/live/sbc"
+Output="-f flv rtmp://23.21.227.80/live/sbc"
 #Output="outputtest"
 #################
 #Output="-y /www/realtime"
-#################
-
-# ENDING (remove this when testing to a rtmp server)
+# ENDING (use this when testing to a file)
 #Testend=".mp4"
+#################
 
 # COMMAND
 # add -re for realtime input of a file (only for testing), but also for running a temporary video during downtime!!!
-#####  First number is video, 2nd is audio
 
-#sudo docker run -v /home/ripena/projects/sbc/20141101-CFC-ec2-files/www:/www nachochip/ffmpeg:2.4.2 \
-# for testing with a file, include a -re tag before input, to feed it in realtime
 ffmpeg \
 -i ${Input} \
 ${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Output}14${Testend} \
@@ -87,9 +76,6 @@ ${testingDefprocess} -s 160x90 -b:v $((8))k ${Middle} -b:a 8k ${Output}1${Testen
 
 # for some reason this is putting more load on server than I want, will investigate later
 #-f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/test.jpg
-
-
-#  code for creating an image every 2 seconds
 # try to write this to S3
 
 # Nginx commands here, remember to open/close public port later, but do we really need this?
@@ -97,4 +83,4 @@ ${testingDefprocess} -s 160x90 -b:v $((8))k ${Middle} -b:a 8k ${Output}1${Testen
 # simply add a role to this server to allow writing to S3
 
 # since I cannot directly write to s3, and rsyncing would be rather crood, I will choose to deliver
-# via nginx proxy over to the wowza, and from wowza to cloudfront. need to setup this process - no cache
+# via nginx proxy over to the wowza, and from wowza to cloudfront. need to setup this process - short TTL
