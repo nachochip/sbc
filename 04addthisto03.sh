@@ -23,7 +23,7 @@ Input="rtmp://23.21.227.80/live/hd"
 #################
 #### TODO #######
 #testingDefprocess="-vcodec copy"
-testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97"
+testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97 -preset faster"
 ########### try without first and see how it multi-encodes ###############
 # this will set h.264 profile and levels
 # -profile:v baseline -level 3.0
