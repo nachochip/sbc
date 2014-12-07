@@ -16,7 +16,7 @@ Input="rtmp://23.21.227.80/live/hd"
 # VIDEO CONFIGS
 #################
 #testingDefprocess="-vcodec copy"
-testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97"
+testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97 -preset faster"
 ########### try without first and see how it multi-encodes ###############
 # Currently, libx264 is best x.264 encoder
 #	(I suggest converting to x.265 when more popular)
