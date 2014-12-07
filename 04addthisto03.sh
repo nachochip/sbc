@@ -13,31 +13,29 @@ Input="rtmp://23.21.227.80/live/hd"
 #Input="rtmp://23.21.227.80/live/myStream3"
 #Input="/www/bjput-delete.mp4"
 
-# CONFIGS
-# Currently, libx264 is best x.264 encoder
-#	(I suggest converting to x.265 when more popular)
-# Currently, libfdk_aac is best AAC encoder
-#	(there is some higher frequency limit which can be removed via a command option)
-#testingDefprocess="-c:v libx264 -c:a libfdk_aac"
-#testingDefprocess="-vcodec copy -acodec copy"
+# VIDEO CONFIGS
 #################
-#### TODO #######
 #testingDefprocess="-vcodec copy"
 testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_min 60 -sc_threshold 0 -r 29.97"
 ########### try without first and see how it multi-encodes ###############
-# this will set h.264 profile and levels
+# Currently, libx264 is best x.264 encoder
+#	(I suggest converting to x.265 when more popular)
+# this will force h.264 profile and levels, will not be using since I will let it auto-apply according to resultion size
 # -profile:v baseline -level 3.0
-# this will set the GOP which marks the keyframe, this should be an i-frame, so related to FPS as well.  30fps (I will keep 2$
-# -g will set GOP length, -keyint_min will limit variability, and -sc_threshold will disable scene detection = all of which a$
-# -g 60 -keyint_min 60 -sc_threshold 0"
-# this will set the reference frame number, which tells the encoder the number of frames it can reference when encoding, I wo$
+# -g will set the GOP length, which marks the keyframe, each keyframe should be an i-frame, so related to FPS as well.
+# @30fps, the 60 GOP size will set a keyframe every 2 seconds. @60fps, the 60 GOP size will set a keyframe every 1 second.
+# -keyint_min will limit variability of the GOP, and -sc_threshold will disable scene detection = all will control GOP size.
+# this will set the reference frame number, which tells the encoder the number of frames it can reference when encoding.
+# I won't be using this since I am already controlling GOP.  I will let it refer to as many frames as it wants.
 # -refs 1
 ###################
 
-# CONFIGS?
+# AUDIO CONFIGS
 ###################
 #### TODO #######
-#  frequency limits from libfdk?, bits?(24bits/10bits?), 
+# Currently, libfdk_aac is best AAC encoder
+#	(there is some higher frequency limit which can be removed via a command option)
+#  frequency limits from libfdk?, bits?(24bits/10bits?)
 # Build out audio options as well (i.e. libfdk_aac = small NOTE: change frequency limit and test if better)
 #Middle="-acodec copy"
 Middle="-acodec libfdk_aac -ar 44.1k"
@@ -47,7 +45,6 @@ Middle="-acodec libfdk_aac -ar 44.1k"
 # I wonder if we will need " live=1" ?  I think only for FMS servers
 #Output="-f flv rtmp://10.0.0.10/live/sbc"
 Output="-f flv rtmp://23.21.227.80/live/sbc"
-#Output="outputtest"
 #################
 #Output="-y /www/realtime"
 # ENDING (use this when testing to a file)
