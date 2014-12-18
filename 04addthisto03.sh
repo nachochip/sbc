@@ -28,6 +28,9 @@ testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_m
 # this will set the reference frame number, which tells the encoder the number of frames it can reference when encoding.
 # I won't be using this since I am already controlling GOP.  I will let it refer to as many frames as it wants.
 # -refs 1
+# -preset faster adjusts the intensity of calculations 
+# (options = ultrafast,superfast, veryfast, faster, fast, medium, slow, slower, veryslow)
+# default is medium, but I have changed to faster to lessen impact on CPU, some have even gone down to ultrafast
 ###################
 
 # AUDIO CONFIGS
@@ -54,6 +57,11 @@ Output="-f flv rtmp://23.21.227.80/live/sbc"
 # COMMAND
 # add -re for realtime input of a file (only for testing), but also for running a temporary video during downtime!!!
 
+#####################
+# Insert profiles and levels:  I noticed High profile was pushed through on the old wowza....need to adjust here.
+# I am not sure what the new wowza is pushing through since I am having temporary rtmp copy issues. Good to adjust anyway.
+# adjust sbc.smil = it only has 13, not 14 streams......here we have 14, kill bigger stream??
+##################################
 ffmpeg \
 -i ${Input} \
 ${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Output}14${Testend} \
