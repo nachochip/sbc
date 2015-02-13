@@ -47,7 +47,7 @@ Middle="-acodec libfdk_aac -ar 44.1k"
 # OUTPUT
 # I wonder if we will need " live=1" ?  I think only for FMS servers
 #Output="-f flv rtmp://10.0.0.10/live/sbc"
-Output="-f flv rtmp://23.21.227.80/live/sbc"
+Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 #################
 #Output="-y /www/realtime"
 # ENDING (use this when testing to a file)
