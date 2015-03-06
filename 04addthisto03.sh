@@ -8,10 +8,12 @@
 # sbc.smil contains following total bitrates kbps: 8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181
 
 # INPUT
-#Input="rtmp://10.0.0.10/live/hd"
+#Input="rtmp://10.0.0.10/livecf/hd"
 Input="rtmp://23.21.227.80/livecf/hd"
-#Input="rtmp://23.21.227.80/live/myStream3"
-#Input="/www/bjput-delete.mp4"
+#Input="rtmp://23.21.227.80/livecf/myStream3"
+#Input="/www/bjput-full.mp4"
+#Input="/www/bjput-song.mp4"
+#Input="/www/bjput-clip.mp4"
 
 # VIDEO CONFIGS
 #################
@@ -28,9 +30,9 @@ testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_m
 # this will set the reference frame number, which tells the encoder the number of frames it can reference when encoding.
 # I won't be using this since I am already controlling GOP.  I will let it refer to as many frames as it wants.
 # -refs 1
-# -preset faster adjusts the intensity of calculations 
+# -preset faster adjusts the intensity of calculations
 # (options = ultrafast,superfast, veryfast, faster, fast, medium, slow, slower, veryslow)
-# default is medium, but I have changed to faster to lessen impact on CPU, some have even gone down to ultrafast
+# default is medium, but I have changed to "faster" to lessen impact on CPU, some have even gone down to ultrafast
 ###################
 
 # AUDIO CONFIGS
@@ -46,10 +48,10 @@ Middle="-acodec libfdk_aac -ar 44.1k"
 
 # OUTPUT
 # I wonder if we will need " live=1" ?  I think only for FMS servers
-#Output="-f flv rtmp://10.0.0.10/live/sbc"
+#Output="-f flv rtmp://10.0.0.10/livecf/sbc"
 Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 #################
-#Output="-y /www/realtime"
+#Output="-y /www/20150303/realtime"
 # ENDING (use this when testing to a file)
 #Testend=".mp4"
 #################
@@ -62,7 +64,9 @@ Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 # I am not sure what the new wowza is pushing through since I am having temporary rtmp copy issues. Good to adjust anyway.
 # adjust sbc.smil = it only has 13, not 14 streams......here we have 14, kill bigger stream??
 ##################################
-ffmpeg \
+# loglevel (info-default, verbose, debug) -report will assume at least a verbose level
+# add in -report to write a log inside the container....here I want it to write to std out, will be logged in host
+ffmpeg -loglevel debug \
 -i ${Input} \
 ${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Output}14${Testend} \
 ${testingDefprocess} -s 1280x720 -b:v $((2584-160))k ${Middle} -b:a 160k ${Output}13${Testend} \
