@@ -42,8 +42,8 @@ testingDefprocess="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9 -g 60 -keyint_m
 #	(there is some higher frequency limit which can be removed via a command option)
 #  frequency limits from libfdk?, bits?(24bits/10bits?)
 # Build out audio options as well (i.e. libfdk_aac = small NOTE: change frequency limit and test if better)
-#Middle="-acodec copy"
-Middle="-acodec libfdk_aac -ar 44.1k"
+#Middleaudio="-acodec copy"
+Middleaudio="-acodec libfdk_aac -ar 44.1k"
 ###################
 
 # OUTPUT
@@ -66,22 +66,22 @@ Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 ##################################
 # loglevel (info-default, verbose, debug) -report will assume at least a verbose level
 # add in -report to write a log inside the container....here I want it to write to std out, will be logged in host
-ffmpeg -loglevel debug \
+ffmpeg -loglevel verbose \
 -i ${Input} \
-${testingDefprocess} -s 1920x1080 -b:v $((4181-320))k ${Middle} -b:a 320k ${Output}14${Testend} \
-${testingDefprocess} -s 1280x720 -b:v $((2584-160))k ${Middle} -b:a 160k ${Output}13${Testend} \
-${testingDefprocess} -s 1280x720 -b:v $((1597-160))k ${Middle} -b:a 160k ${Output}12${Testend} \
-${testingDefprocess} -s 640x360 -b:v $((987-160))k ${Middle} -b:a 160k ${Output}11${Testend} \
-${testingDefprocess} -s 640x360 -b:v $((610-160))k ${Middle} -b:a 160k ${Output}10${Testend} \
-${testingDefprocess} -s 640x360 -b:v $((377-160))k ${Middle} -b:a 160k ${Output}9${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((233-80))k ${Middle} -b:a 80k ${Output}8${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((144-80))k ${Middle} -b:a 80k ${Output}7${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((89-40))k ${Middle} -b:a 40k ${Output}6${Testend} \
-${testingDefprocess} -s 320x180 -b:v $((55-34))k ${Middle} -b:a 34k ${Output}5${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((34-21))k ${Middle} -b:a 21k ${Output}4${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((21-15))k ${Middle} -b:a 15k ${Output}3${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((13-10))k ${Middle} -b:a 10k ${Output}2${Testend} \
-${testingDefprocess} -s 160x90 -b:v $((8))k ${Middle} -b:a 8k ${Output}1${Testend} \
+${testingDefprocess} -s 1920x1080 -profile:v high -level 4.0     -b:v $((4181-320))k ${Middleaudio} -b:a 320k ${Output}14${Testend} \
+${testingDefprocess} -s 1280x720  -profile:v main -level 3.1     -b:v $((2584-160))k ${Middleaudio} -b:a 160k ${Output}13${Testend} \
+${testingDefprocess} -s 1280x720  -profile:v main -level 3.1     -b:v $((1597-160))k ${Middleaudio} -b:a 160k ${Output}12${Testend} \
+${testingDefprocess} -s 640x360   -profile:v baseline -level 3.0 -b:v $((987-160))k  ${Middleaudio} -b:a 160k ${Output}11${Testend} \
+${testingDefprocess} -s 640x360   -profile:v baseline -level 3.0 -b:v $((610-160))k  ${Middleaudio} -b:a 160k ${Output}10${Testend} \
+${testingDefprocess} -s 640x360   -profile:v baseline -level 3.0 -b:v $((377-160))k  ${Middleaudio} -b:a 160k ${Output}9${Testend} \
+${testingDefprocess} -s 320x180   -profile:v baseline -level 1.3 -b:v $((233-80))k   ${Middleaudio} -b:a 80k  ${Output}8${Testend} \
+${testingDefprocess} -s 320x180   -profile:v baseline -level 1.3 -b:v $((144-80))k   ${Middleaudio} -b:a 80k  ${Output}7${Testend} \
+${testingDefprocess} -s 320x180   -profile:v baseline -level 1.3 -b:v $((89-40))k    ${Middleaudio} -b:a 40k  ${Output}6${Testend} \
+${testingDefprocess} -s 320x180   -profile:v baseline -level 1.3 -b:v $((55-34))k    ${Middleaudio} -b:a 34k  ${Output}5${Testend} \
+${testingDefprocess} -s 160x90    -profile:v baseline -level 1.1 -b:v $((34-21))k    ${Middleaudio} -b:a 21k  ${Output}4${Testend} \
+${testingDefprocess} -s 160x90    -profile:v baseline -level 1.1 -b:v $((21-15))k    ${Middleaudio} -b:a 15k  ${Output}3${Testend} \
+${testingDefprocess} -s 160x90    -profile:v baseline -level 1.1 -b:v $((13-10))k    ${Middleaudio} -b:a 10k  ${Output}2${Testend} \
+${testingDefprocess} -s 160x90    -profile:v baseline -level 1.1 -b:v $((8))k        ${Middleaudio} -b:a 8k   ${Output}1${Testend} \
 
 # for some reason this is putting more load on server than I want, will investigate later
 #-f image2 -vf fps=fps=1/2 -update 1 -s 640x360 -y www/test.jpg
