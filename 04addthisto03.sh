@@ -52,7 +52,8 @@ Middleaudio="-acodec libfdk_aac -ar 44.1k"
 Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 #################
 #Output="-y /www/20150303/realtime"
-# ENDING (use this when testing to a file)
+# ENDING (?live=1 is used for rtmp, mp4 is used when testing to a file)
+Testend="?live=1"
 #Testend=".mp4"
 #################
 
