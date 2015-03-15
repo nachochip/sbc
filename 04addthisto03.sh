@@ -52,8 +52,8 @@ Middleaudio="-acodec libfdk_aac -ar 44.1k"
 Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 #################
 #Output="-y /www/20150303/realtime"
-# ENDING (?live=1 is used for rtmp, mp4 is used when testing to a file)
-Testend="?live=1"
+# ENDING (?live=1 is used for rtmp, mp4 is used when testing to a file) (((didn't really work when used with wowza)
+#Testend="?live=1"
 #Testend=".mp4"
 #################
 
@@ -66,7 +66,7 @@ Testend="?live=1"
 # adjust sbc.smil = it only has 13, not 14 streams......here we have 14, kill bigger stream??
 ##################################
 # loglevel (info-default, verbose, debug) -report will assume at least a verbose level
-# add in -report to write a log inside the container....here I want it to write to std out, will be logged in host
+# add in -report to write a log inside the container....here I want it to write to std out, will be logged in host's own upstart log
 ffmpeg -loglevel verbose \
 -i ${Input} \
 ${testingDefprocess} -s 1920x1080 -profile:v high -level 4.0     -b:v $((4181-320))k ${Middleaudio} -b:a 320k ${Output}14${Testend} \
