@@ -67,7 +67,7 @@ Output="-f flv rtmp://23.21.227.80/livecf/sbc"
 ##################################
 # loglevel (info-default, verbose, debug) -report will assume at least a verbose level
 # add in -report to write a log inside the container....here I want it to write to std out, will be logged in host's own upstart log
-ffmpeg -loglevel verbose \
+ffmpeg \
 -i ${Input} \
 ${testingDefprocess} -s 1920x1080 -profile:v high -level 4.0     -b:v $((4181-320))k ${Middleaudio} -b:a 320k ${Output}14${Testend} \
 ${testingDefprocess} -s 1280x720  -profile:v main -level 3.1     -b:v $((2584-160))k ${Middleaudio} -b:a 160k ${Output}13${Testend} \
