@@ -8,12 +8,12 @@ mountpoint $LOCALMOUNT
 if [ $? -eq 0 ] ; then
 #if mount | grep "on ${volume} type" > /dev/null; then
 #if mount | grep "on $LOCALMOUNT" > /dev/null; then
-	rsync -azvh --delete-after $LOCALMOUNT /home/pi/Pictures/skybreak-ads/
+	rsync -azvh --delete-after --exclude=".*" $LOCALMOUNT /home/pi/Pictures/skybreak-ads/
 else
 	sudo mount -a
 	mountpoint $LOCALMOUNT
 	if [ $? -eq 0 ] ; then
-		rsync -azvh --delete-after $LOCALMOUNT /home/pi/Pictures/skybreak-ads/
+		rsync -azvh --delete-after --exclude=".*" $LOCALMOUNT /home/pi/Pictures/skybreak-ads/
 	else
 		echo "not rsyncing anything, leaving as is"
 		#if this doesn't work, try setting a Skybreak logo as default with
