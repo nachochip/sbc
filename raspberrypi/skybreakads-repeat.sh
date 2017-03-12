@@ -5,6 +5,6 @@
 
 while true ;
 
-do skybreakads-rsync.sh & sleep 10 ;
+do skybreakads-rsync.sh & sleep 15 ;
 
 done
