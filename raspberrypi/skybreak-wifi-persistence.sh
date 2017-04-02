@@ -18,8 +18,8 @@ else
 				echo "should be ok"
 			else
 				echo "route not found, rebinding dhcp to interface"
-				sudo dhcpcd -n wlan0
-#				dhclient wlan0
+#				sudo dhcpcd -n wlan0
+				sudo dhclient wlan0
 			fi
 	else
 		echo "Skybreak not found, rebooting wifi"
