@@ -1,5 +1,5 @@
 #!/bin/sh
-#  This script runs the rsync command over an over to sync up the pictures
+#  This script repeats a command that checks the wifi and corrects it
 #while true; do ./your-script & sleep 5; done
 
 
