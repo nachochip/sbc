@@ -12,7 +12,7 @@ if [ $? -eq 0 ] ; then
 else
 	iwgetid -r | grep $TARGETSSID
 	if [ $? -eq 0 ] ; then
-		route | grep $TARGETROUTE
+		route -n | grep $TARGETROUTE
 			if [ $? -eq 0 ] ; then
 				echo "should be ok"
 			else
@@ -23,5 +23,3 @@ else
 		sudo ifdown --force wlan0 && sudo ifup --force wlan0
 	fi
 fi
-
-
