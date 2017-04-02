@@ -2,6 +2,10 @@
 #  This script runs the rsync command over an over to sync up the pictures
 #while true; do ./your-script & sleep 5; done
 
+# check wifi first
+sudo /usr/bin/skybreak-wifi-persistence.sh
+
+#check mounts and rsync
 LOCALMOUNT="/home/pi/mounted-drives/covenantshare/skybreak-ads-only/"
 
 mountpoint $LOCALMOUNT
