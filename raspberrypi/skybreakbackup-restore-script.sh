@@ -2,7 +2,7 @@
 # This script should be run on a standalone computer to restore the backup files for the RPI
 
 # let's set the folders
-echo "Where are your files located (e.g. ~/home -or- /media/ripena/databackup)"
+echo "Where are your files located (e.g. /home/ripena/FOLDER -or- /media/ripena/databackup)"
 read LOCATESPOT
 
 # ask for partition
@@ -11,7 +11,7 @@ echo "Type the drive/partition you are going to restore to (e.g. type 'sdb' if /
 read DRIVELET
 
 # let's set the date
-ls ${LOCATESPOT}/
+ls ${LOCATESPOT}
 echo "What is the date you want to restore? (e.g. 20170421)"
 read ACTIVEDATE
 
