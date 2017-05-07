@@ -16,4 +16,4 @@ tvservice -t -e "CEA 5"
 # -md, mode [1=1920x1080 (max 30fps) / 6=1280x720 (max 90fps) / 5=1640x922(max 40fps)]
 # -fps, see line above for max setting
 # target is [ -md 1 -fps 29.97  //-or-//  -md 6 -fps 59.94 ]
-raspivid -f -t 0 -vs -awb fluorescent -ISO 100 -md 1 -fps 29.97 &
+raspivid -f -t 0 -vs -awb fluorescent -ISO 100 -md 6 -fps 59.94 &
