@@ -3,8 +3,12 @@
 
 # let's set the date
 USEDATE=$(date +%Y%m%d)
+# let's mount the network drive
+echo "run your mount script manually"
+read -p "Press enter to continue"
 # let's set the folder for all backups
-WORKINGFOLDER="/home/pi/networkbackup/lc-rpi"
+WORKINGFOLDER=/home/pi/networkbackup/$(hostname)
+mkdir -p ${WORKINGFOLDER}
 # command to clear previous backups that are older than 15 days (keeps 2 weeks of backup)
 find ${WORKINGFOLDER}/* -mtime +15 -exec rm {} \;
 
