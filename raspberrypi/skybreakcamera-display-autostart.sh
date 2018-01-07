@@ -19,10 +19,14 @@ tvservice -t -e "CEA 5"
 # -ae, text  to display camera
 # -cfx, 128:128 = black&white   //  100:150 = sepia
 # -ifx, image effects (useful:  )
+# dark stage: 500  // front stage: 200
+isoset='200'
+#front camera: tungsten  // typically: fluorescent
+lightset='fluorescent'
 #myID='-ae 120,0xff,0x808000 -a $(hostname)'
 #myColorEffects='-cfx 128:128'
 #myImageEffects='-ifx cartoon'
 
 #raspivid -f -t 0 -vs -awb fluorescent -ISO 100 -md 6 -fps 59.94 &
 
-raspivid -f -t 0 -vs -awb fluorescent -ISO 100 -md 6 -fps 59.94 ${myID} ${myColorEffects} ${myImageEffects} &
+raspivid -f -t 0 -vs -awb ${lightset} -ISO ${isoset} -md 6 -fps 59.94 ${myID} ${myColorEffects} ${myImageEffects} &
