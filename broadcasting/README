@@ -1,0 +1,6 @@
+- create bin folder in home of user
+- copy these files to the ~/bin/ folder
+- Ubuntu and Debian automatically load if bin folder is detected
+- if needed,link to another folder, like a Dropbox folder 
+	# make sure the newfolder is not present
+	ln -sfn targetfolderindropbox ~/bin
