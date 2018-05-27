@@ -4,30 +4,32 @@
 # move files to broadcast computer
 #check mounts and rsync // add this mount under /etc/fstab
 # //hd-recorder-v2.local/d-drive/INPUT /home/broadcast/delete-temp-mount cifs guest,uid=1000,iocharset=utf8,rw,_netdev 0 0
-LOCALMOUNT="~/delete-temp-mount"
-LOCALTARGET="~/delete-temp-target-local"
+# make sure user is correct on these next two lines
+LOCALMOUNT="/home/broadcast/delete-temp-mount"
+LOCALTARGET="/home/broadcast/delete-temp-target-local"
 
 mountpoint $LOCALMOUNT
 if [ $? -eq 0 ] ; then
-#if mount | grep "on ${volume} type" > /dev/null; then
-#if mount | grep "on $LOCALMOUNT" > /dev/null; then
-#	rm -f .*jpg $LOCALMOUNT
-	rsync -azvh --delete-after --exclude=".*" $LOCALMOUNT $LOCALTARGET
+	# find only files within last 7 days in minutes
+	cd $LOCALMOUNT
+	find . -cmin -10080 -type f -print0 | rsync -0azvh --delete-after --exclude=".*" --files-from=- $LOCALMOUNT $LOCALTARGET
+	# this next part removes files older than 7 days
+	find $LOCALTARGET -cmin +10080 -type f -exec rm {} \;
 else
 	sudo mount -a
 	mountpoint $LOCALMOUNT
 	if [ $? -eq 0 ] ; then
-#		rm -f .*jpg $LOCALMOUNT
-		rsync -azvh --delete-after --exclude=".*" $LOCALMOUNT $LOCALTARGET
+		# find only files within last 7 days in minutes
+		cd $LOCALMOUNT
+		find . -cmin -10080 -type f -print0 | rsync -0azvh --delete-after --exclude=".*" --files-from=- $LOCALMOUNT $LOCALTARGET
+		find $LOCALTARGET -cmin +10080 -type f -exec rm {} \;
 	else
         	echo "not rsyncing anything, leaving as is"
-		#if this doesn't work, try setting a Skybreak logo as default with
-		# a 'network malfunction' in the logo
 	fi
 fi
 
 
-
-# integrate THIS SO I can ONLY rsync files within last 24 hours
-# https://ubuntuforums.org/showthread.php?t=1837771
-find $LOCALMOUNT -cmin -10080 -type f -print0 | rsync -0azvh --delete-after --exclude=".*" --files-from=- $LOCALMOUNT $LOCALTARGET
+## Next step
+## working rough draft scripts are in /home/ripena/bin; make sure to use "delete-my-own" folder to test
+## Emailing about files already saved,very tough since I have to trigger only an actual sink
+# maybe detect or grep report for files above 100MB?
