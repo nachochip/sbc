@@ -4,6 +4,6 @@
 
 while true ;
 
-do encodingscript.sh & sleep 15 ;
+do syncfilesscript.sh & sleep 15 ;
 
 done

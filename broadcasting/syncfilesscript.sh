@@ -1,10 +1,11 @@
 #!/bin/bash
-# this script allows us to encode video services
+# this script allows us to sync the files in preparation of encoding video services
 
-# move files to broadcast computer
-#check mounts and rsync // add this mount under /etc/fstab
-# //hd-recorder-v2.local/d-drive/INPUT /home/broadcast/delete-temp-mount cifs guest,uid=1000,iocharset=utf8,rw,_netdev 0 0
-# make sure user is correct on these next two lines
+# this script does the following:
+# - moves files to broadcast computer
+# - checks mounts and rsync // NOTE: add the following line to mount under /etc/fstab
+# - //hd-recorder-v2.local/d-drive/INPUT /home/broadcast/delete-temp-mount cifs guest,uid=1000,iocharset=utf8,rw,_netdev 0 0
+# - make sure user is correct on these next two lines
 LOCALMOUNT="/home/broadcast/delete-temp-mount"
 LOCALTARGET="/home/broadcast/delete-temp-target-local"
 
@@ -31,5 +32,12 @@ fi
 
 ## Next step
 ## working rough draft scripts are in /home/ripena/bin; make sure to use "delete-my-own" folder to test
-## Emailing about files already saved,very tough since I have to trigger only an actual sink
-# maybe detect or grep report for files above 100MB?
+
+# Encoding questions are in the next script......probably will run that manually, unless I want to have
+# a person put details in a file?  which one?  hmmmm will think
+
+## work on this part later
+# setup emailing steps
+# Emailing about files already saved,very tough since I have to trigger only an actual sync
+# maybe detect or grep report for files above 5MB(due to audio)? For the trigger
+##
