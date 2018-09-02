@@ -59,57 +59,81 @@ read SERVICETWOEND
 ############
 ############
 # I AM RIGHT HERE, send this segment to deletemescript.sh in bin folder
+# Stuff finished:
+# 	- basic template for pieces, (need to do multi-pass)
+# Stuff to-do =
+#	- Do multi-pass encodes as well  --  CURRENTLY WORKING/FLESHING OUT multi-pass ENCODING
+#	- re-build ffmpeg with libmp3lame enabled
+# for now, I am encoding as m4a, just to finish my program first, then come back
+# put here according to priority to process:
+# Podcast Message audio & video-small & video-big
+# Worship upload to share video - both services (?audio version?)
+# Archive both services
 ############
 ############
 # values that should not be changing much
 #Every September, after apple announcement, review new settings for podcast & streaming
-VIDEOSETTINGS="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9"
-AUDIOSETTINGS="-acodec libfdk_aac"
+BASICVIDEOSETTINGS="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9"
+BASICAUDIOSETTINGS="-acodec libfdk_aac"
 PATHSETTINGS="/home/ripena/Videos"
 MESSAGEAUDIOSETPODCAST="-acodec libmp3lame -ar 48k -b:a 160k"
 # profile main 3.1, ?deinterlace?bilinear? cubic interpolating,   720p, 29.97fps,  3-pass?
 # audio maxvolume?,
-MESSAGEVIDEOSETDROPBOX="-preset faster -b:v 777k"
+USEFORPASS1="-pass 1 -an"
+USEFORPASS2=""
+MESSAGEVIDEOSETDROPBOX="-preset ultrafast -b:v 777k"
 MESSAGEAUDIOSETDROPBOX="-ar 48k -b:a 160k"
-MESSAGEVIDEOSETVIMEO="-preset faster -b:v 10000k"
+MESSAGEVIDEOSETVIMEO="-preset ultrafast -b:v 10000k"
 MESSAGEAUDIOSETVIMEO="-ar 48k -b:a 320k"
-WORSHIPVIDEOSET="-preset faster -b:v 3000k"
+WORSHIPVIDEOSET="-preset ultrafast -b:v 3000k"
 WORSHIPAUDIOSET="-ar 48k -b:a 320k"
-SERVICEARCHIVEVIDEOSET="-preset faster -b:v 10000k"
+SERVICEARCHIVEVIDEOSET="-preset ultrafast -b:v 10000k"
 SERVICEARCHIVEAUDIOSET="-ar 48k -b:a 320k"
 
-# put here according to priority
-## MESSAGE = Video() Audio()
-# ffmpeg MESSAGE 1
 
-# I can put different outputs on one command
-# Audio
-# Video-small
-# Video-big
-# MIGHT NEED TO COMPILE FFMPEG WITH "enable libmp3lame" to get mp3 files!!!!!
-# for now, I am encoding as m4a, just to finish my program first, then come back
+# USE this as a template:  This has Audio, Large-video, Small-video
+# ffmpeg MESSAGE 1
 ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
 	-ss $MESSAGEONESTART -to $MESSAGEONEEND \
-	-vn $MESSAGEAUDIOSETPODCAST $PATHSETTINGS/$NAMEOFFILETOUSE.m4a \
+	-vn $MESSAGEAUDIOSETPODCAST $PATHSETTINGS/$NAMEOFFILETOUSE.m4a &
+ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
 	-ss $MESSAGEONESTART -to $MESSAGEONEEND \
-	$VIDEOSETTINGS $MESSAGEVIDEOSETDROPBOX \
-	$AUDIOSETTINGS $MESSAGEAUDIOSETDROPBOX $PATHSETTINGS/${NAMEOFFILETOUSE}-small.mp4 \
+	$BASICVIDEOSETTINGS $MESSAGEVIDEOSETDROPBOX -pass 1 -passlogfile dropboxfile -an -f mp4 /dev/null &&
+ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
 	-ss $MESSAGEONESTART -to $MESSAGEONEEND \
-	$VIDEOSETTINGS $MESSAGEVIDEOSETVIMEO \
-	$AUDIOSETTINGS $MESSAGEAUDIOSETVIMEO $PATHSETTINGS/${NAMEOFFILETOUSE}-large.mp4
+	$BASICVIDEOSETTINGS $MESSAGEVIDEOSETDROPBOX -pass 2 -passlogfile dropboxfile \
+	$BASICAUDIOSETTINGS $MESSAGEAUDIOSETDROPBOX $PATHSETTINGS/${NAMEOFFILETOUSE}-small.mp4
 
-# ffmpeg MESSAGE 2
+ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
+	-ss $MESSAGEONESTART -to $MESSAGEONEEND \
+	$BASICVIDEOSETTINGS $MESSAGEVIDEOSETVIMEO -pass 1 -passlogfile vimeofile -an -f mp4 /dev/null &&
+ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
+	-ss $MESSAGEONESTART -to $MESSAGEONEEND \
+	$BASICVIDEOSETTINGS $MESSAGEVIDEOSETVIMEO -pass 2 -passlogfie vimdeofile \
+	$BASICAUDIOSETTINGS $MESSAGEAUDIOSETVIMEO $PATHSETTINGS/${NAMEOFFILETOUSE}-large.mp4
+
+# ffmpeg MESSAGE 2 - NOT ENABLED YET
+# how will I do program to disable / enable which message to use?
 
 ## Worship = Video(?adjust according to 2GB) Audio(320kbps, nothing additional)
-# ffmpeg Worship 1
-# I still need to adjust the enter times and exit times == enter in seconds format or hh:mm:ss format
+# ffmpeg Worship 1 & 2
+ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
+	-ss $SERVICEONESTART -to $MESSAGEONESTART \
+	$BASICVIDEOSETTINGS $WORSHIPVIDEOSET \
+	$BASICAUDIOSETTINGS $WORSHIPAUDIOSET $PATHSETTINGS/${NAMEOFFILETOUSE}-worship-1.mp4 \
+	-ss $SERVICETWOSTART -to $MESSAGETWOSTART \
+	$BASICVIDEOSETTINGS $WORSHIPVIDEOSET \
+	$BASICAUDIOSETTINGS $WORSHIPAUDIOSET $PATHSETTINGS/${NAMEOFFILETOUSE}-worship-2.mp4 \
 
-# ffmpeg Worship 2
-
-## Service = Video() Audio()
-# ffmpeg Service 1
-
-# ffmpeg Service 2
+## ARCHIVE Service - start doing separate archive files
+# ffmpeg Service 1 & 2
+ffmpeg -i $PATHSETTINGS/$NAMEOFFILETOUSE.mkv \
+	-ss $SERVICEONESTART -to $SERVICEONEEND \
+	$BASICVIDEOSETTINGS $SERVICEARCHIVEVIDEOSET \
+	$BASICAUDIOSETTINGS $SERVICEARCHIVEAUDIOSET $PATHSETTINGS/${NAMEOFFILETOUSE}-archive-service-1.mp4 \
+	-ss $SERVICETWOSTART -to $SERVICETWOEND \
+	$BASICVIDEOSETTINGS $SERVICEARCHIVEVIDEOSET \
+	$BASICAUDIOSETTINGS $SERVICEARCHIVEAUDIOSET $PATHSETTINGS/${NAMEOFFILETOUSE}-archive-service-2.mp4 \
 
 # remember to move files to start uploading to AWS / GPhotos / archiving them
 
