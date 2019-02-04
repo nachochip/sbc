@@ -16,7 +16,7 @@ sudo dd if=/dev/mmcblk0 bs=512 count=1 | gzip -c > ${WORKINGFOLDER}/${USEDATE}-0
 sudo umount /dev/mmcblk0p1
 #sudo partimage -od -f3 -z1 -b save /dev/mmcblk0p1 ${WORKINGFOLDER}/${USEDATE}-1-boot-partition.partimg.gz
 # use partclone since partimage is being weird on the resulting restoration process
-sudo partclone.fat32 -c -d -s /dev/mmcblk0p1 | gzip -c > ${WORKINGFOLDER}/${USEDATE}-1-boot-partition-partclone.img.gz
+sudo partclone.vfat -c -d -s /dev/mmcblk0p1 | gzip -c > ${WORKINGFOLDER}/${USEDATE}-1-boot-partition-partclone=-vfat.img.gz
 sudo mount -a
 sudo sync && sudo partprobe
 # all root filesystems will not let me remount as read-only, so I am adding -A to the fsarchiver command to force backup

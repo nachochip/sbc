@@ -25,6 +25,7 @@ sudo sync && sudo partprobe
 # 3) restore each partition
 #sudo partimage -od -f3 -z1 -b restore /dev/sd${DRIVELET}1 YYYYMMDD-boot-partition.partimg.gz
 # since partimage is not working, use partclone
+sudo umount /dev/${DRIVELET}1
 gunzip -c ${LOCATESPOT}/${ACTIVEDATE}-1-*.img.gz | sudo partclone.restore -d -s - -o /dev/${DRIVELET}1
 sudo fsarchiver -j 4 restfs ${LOCATESPOT}/${ACTIVEDATE}-2-*.fsa id=0,dest=/dev/${DRIVELET}2
 sudo fsarchiver -j 4 restfs ${LOCATESPOT}/${ACTIVEDATE}-3-*.fsa id=0,dest=/dev/${DRIVELET}3

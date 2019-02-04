@@ -2,10 +2,8 @@
 # this script allows us to encode video services
 # Here, I ask for the details and then take the appropriate steps
 
-## Next step
 ## working rough draft scripts are in /home/ripena/bin; make sure to use "delete-my-own" folder to test
 # Encoding questions
-
 
 echo "Let's get some information.  I need some frames?/Times? from you."
 echo "Date/Title of file to process (e.g. 20180505)"
@@ -26,23 +24,23 @@ echo $GENRE
 #CURRENTLY, USE Seconds for this, until I find something else
 # THIS ACCEPTS H:M:S, and calculate? or just use
 echo "Enter time as HH:MM:SS.sss"
-echo "Time for SERVICE 1 start?"
+echo "Time for START of SERVICE 1?"
 read SERVICEONESTART
-echo "Time for MESSAGE 1 start?"
+echo "Time for START of MESSAGE 1?"
 read MESSAGEONESTART
-echo "Time for MESSAGE 1 end?"
+echo "Time for END of MESSAGE 1?"
 read MESSAGEONEEND
-echo "Time for SERVICE 1 end?"
+echo "Time for END of SERVICE 1?"
 read SERVICEONEEND
 
 # how to skip sermon/service two if blank?  not sure yet
-echo "Time for SERVICE 2 start? (leave blank if n/a)"
+echo "Time for START of SERVICE 2? (leave blank if n/a)"
 read SERVICETWOSTART
-echo "Time for MESSAGE 2 start? (leave blank if n/a)"
+echo "Time for START of MESSAGE 2? (leave blank if n/a)"
 read MESSAGETWOSTART
-echo "Time for MESSAGE 2 end? (leave blank if n/a)"
+echo "Time for END of MESSAGE 2? (leave blank if n/a)"
 read MESSAGETWOEND
-echo "Time for SERVICE 2 end? (leave blank if n/a)"
+echo "Time for END of SERVICE 2? (leave blank if n/a)"
 read SERVICETWOEND
 
 # maybe here, try to detect title, NOT SURE how to detect file lock or if this part is automatic
@@ -54,42 +52,39 @@ read SERVICETWOEND
 ##  ffprobe to detect times and calculate?
 
 
-
-
 ############
 ############
 # I AM RIGHT HERE, send this segment to deletemescript.sh in bin folder
 # Stuff finished:
-# 	- basic template for pieces, (need to do multi-pass)
-#	- Do multi-pass encodes as well
+# 	- basic template for pieces
+#	- multi-pass encodes
+#	- finished checking this script, as of 10/07/18
+#	- x264 levels implemented
+#	- x264 profiles implemented (don't use ultrasfast, faster in the superfast setting)
 # Stuff to-do =
 #	- re-build ffmpeg with libmp3lame enabled
 # for now, I am encoding as m4a, just to finish my program first, then come back and change back to mp3 !!!!
-# put here according to priority to process:
-# Podcast Message audio & video-small & video-big
-# Worship upload to share video - both services (?audio version?)
-# Archive both services
-# change the ultrafast back to a different preset speed !!!!
+# change the superfast (don't use ultrafast) back to a different preset speed !!!!
 # mp3 tags and include pic in mp3
 ############
 ############
 # values that should not be changing much
-#Every September, after apple announcement, review new settings for podcast & streaming
 BASICVIDEOSETTINGS="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9"
 BASICAUDIOSETTINGS="-acodec libfdk_aac"
 PATHSETTINGS="/home/ripena/Videos"
 MESSAGEAUDIOSETPODCAST="-acodec libmp3lame -ar 48k -b:a 160k"
 WORSHIPAUDIOSETFORSHARE="-acodec libmp3lame -ar 48k -b:a 320k"
-# profile main 3.1, ?deinterlace?bilinear? cubic interpolating,   720p, 29.97fps,  3-pass?
+# ?deinterlace?bilinear? cubic interpolating,   720p, 29.97fps?
 # audio maxvolume?,
-MESSAGEVIDEOSETDROPBOX="-preset ultrafast -b:v 777k"
+#Every September, after apple announcement, review new settings for podcast & streaming
+MESSAGEVIDEOSETDROPBOX="-preset superfast -s 1920x1080 -profile:v main -level:v 4.2 -b:v 777k"
 MESSAGEAUDIOSETDROPBOX="-ar 48k -b:a 160k"
-MESSAGEVIDEOSETVIMEO="-preset ultrafast -b:v 10000k"
+MESSAGEVIDEOSETVIMEO="-preset superfast -s 1920x1080 -profile:v high -level:v 4.2 -b:v 10000k"
 MESSAGEAUDIOSETVIMEO="-ar 48k -b:a 320k"
-WORSHIPVIDEOSET="-preset ultrafast -b:v 3000k"
-WORSHIPAUDIOSET="-ar 48k -b:a 320k"
-SERVICEARCHIVEVIDEOSET="-preset ultrafast -b:v 10000k"
+SERVICEARCHIVEVIDEOSET="-preset superfast -s 1920x1080 -profile:v high -level:v 4.2 -b:v 10000k"
 SERVICEARCHIVEAUDIOSET="-ar 48k -b:a 320k"
+WORSHIPVIDEOSET="-preset superfast -s 1920x1080 -profile:v high -level:v 4.2 -b:v 3000k"
+WORSHIPAUDIOSET="-ar 48k -b:a 320k"
 
 
 # ffmpeg MESSAGE 1
