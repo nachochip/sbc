@@ -63,9 +63,9 @@ read SERVICETWOEND
 #	- x264 profiles implemented (don't use ultrasfast, faster in the superfast setting)
 # Stuff to-do =
 #	- re-build ffmpeg with libmp3lame enabled
-# for now, I am encoding as m4a, just to finish my program first, then come back and change back to mp3 !!!!
-# change the superfast (don't use ultrafast) back to a different preset speed !!!!
-# mp3 tags and include pic in mp3
+# 	- for now, I am encoding as m4a, just to finish my program first, then come back and change back to mp3 !!!!
+# change the superfast (don't use ultrafast) back to a different preset speed (i.e. medium, slow, etc) !!!!
+# 	- add mp3 tags and include pic in mp3
 ############
 ############
 # values that should not be changing much
