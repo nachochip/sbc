@@ -16,7 +16,7 @@ read SERVICEONEEND
 BASICVIDEOSETTINGS="-vcodec libx264 -pix_fmt yuv420p -aspect 16:9"
 BASICAUDIOSETTINGS="-acodec libfdk_aac"
 PATHSETTINGSIN="/home/broadcast/mntforencoding/Input"
-PATHSETTINGSOUT="/home/broadcast/mntforencoding/Output"
+PATHSETTINGSOUT="/media/broadcast/Video-Drive/Output"
 MESSAGEAUDIOSETPODCAST="-acodec libmp3lame -ar 48k -b:a 160k"
 WORSHIPAUDIOSETFORSHARE="-acodec libmp3lame -ar 48k -b:a 320k"
 
