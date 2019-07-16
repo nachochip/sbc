@@ -62,7 +62,8 @@ read SERVICETWOEND
 #	- x264 levels implemented
 #	- x264 profiles implemented (don't use ultrasfast, faster in the superfast setting)
 # Stuff to-do =
-#	- re-build ffmpeg with libmp3lame enabled
+#	- re-build ffmpeg with libmp3lame enabled: I am getting NASM issues needs, v2.13 and 
+#		debian/stable only has 2.12. maybe using debian/testing has v2.14  or build inside
 # 	- for now, I am encoding as m4a, just to finish my program first, then come back and change back to mp3 !!!!
 # change the superfast (don't use ultrafast) back to a different preset speed (i.e. medium, slow, etc) !!!!
 # 	- add mp3 tags and include pic in mp3
