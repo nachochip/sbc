@@ -23,7 +23,7 @@ WORSHIPVIDEOSET="-preset superfast -s 1920x1080 -profile:v high -level:v 4.2 -b:
 WORSHIPAUDIOSET="-ar 48k -b:a 320k"
 
 
-ffmpeg -i $PATHSETTINGSIN/$NAMEOFFILETOUSE.avi \
+ffmpeg -i $PATHSETTINGSIN/$NAMEOFFILETOUSE*.avi \
 		$BASICVIDEOSETTINGS $SERVICEARCHIVEVIDEOSET -pass 1 -passlogfile 1stlog -an -f mp4 -y /dev/null && \
 	ffmpeg -i $PATHSETTINGSIN/$NAMEOFFILETOUSE.mkv \
 		$BASICVIDEOSETTINGS $SERVICEARCHIVEVIDEOSET -pass 2 -passlogfile 1stlog \
