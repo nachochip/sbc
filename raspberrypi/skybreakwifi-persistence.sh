@@ -23,7 +23,8 @@ else
 #				sudo dhclient wlan0
 			fi
 	else
-		echo "Skybreak not found, rebooting wifi" | mail -s "rebooting wifi" root
+		top -bin1 > /home/pi/topoutput.txt
+		echo "Skybreak not found, rebooting wifi" | mail -s "rebooting wifi" -A /home/pi/topoutput.txt root
 		sudo ifdown --force wlan0 && sudo ifup --force wlan0
 	fi
 fi
